@@ -1,0 +1,23 @@
+{
+  "name": "heroku-version",
+  "version": "1.0.0",
+  "description": "Heroku version with start package",
+  "main": "index.js",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thaumocracy/node-practice.git"
+  },
+  "author": "Thaumocracy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thaumocracy/node-practice/issues"
+  },
+  "homepage": "https://github.com/thaumocracy/node-practice#readme"
+}
