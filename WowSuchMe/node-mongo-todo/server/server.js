@@ -30,19 +30,18 @@ app.get('/todos/:id',(request,response) => {
     const id = request.params.id;
     if(ObjectID.isValid(id)){
         Todo.findById(id).then((todo) => {
-            response.status(200).send(todo)
-        }).catch(() => {
-            response.send('There is no such todo')
+            if(!todo){
+                response.status(404).send('There is no such todo')
+            } else {
+                response.send(todo)
+            }
+        }).catch((error) => {
+            response.status(404).send('There is no such todo')
         })
     } else {
         response.status(404).send('Woops,invalid ID')
     }
 })
-
-
-
-
-
 
 
 app.listen(3000,() => {
