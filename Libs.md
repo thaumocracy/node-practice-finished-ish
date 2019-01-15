@@ -8,3 +8,5 @@ Expect : Тест-утилита.
 Mocha : Библиотека BDD-тестов
 Supertest : Тест-утилита для Mocha
 Body-parser : парсер для response.body
+crypto-js : библиотека для различных крипто-алгоритмов.
+jsonwebtoken : Создает хеш веб-токены
