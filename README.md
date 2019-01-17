@@ -7,6 +7,7 @@ Folders from various courses i care to save.
 | Title      | Source         |
 | ------------- |:-------------:|
 | __Mead__      | [this course by Andrew Mead](https://www.udemy.com/the-complete-nodejs-developer-course-2) |
+| __Academind__ | [this course by Academind](https://www.udemy.com/nodejs-the-complete-guide) |
 | __WowSuchMe__ | is my own attempts on various topics of Node.js   |
 ---
 
