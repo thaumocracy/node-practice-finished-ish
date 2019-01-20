@@ -11,3 +11,4 @@ Body-parser : парсер для response.body
 crypto-js : библиотека для различных крипто-алгоритмов.
 jsonwebtoken : Создает хеш веб-токены
 bcryptjs : Создает хеш с солью для хранения паролей
+compression : gzip-компрессор
