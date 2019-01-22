@@ -26,14 +26,14 @@ const server = http.createServer((request,response) => {
       console.log(chunk)
       body.push(chunk)
     })
-    request.on('end', () => {
+    return request.on('end', () => {
       const parsedBody = Buffer.concat(body).toString()
       const message = parsedBody.split('=')[1]
       fs.writeFileSync('message.txt',message)
+      response.statusCode = 302
+      response.setHeader('Location', '/')
+      return response.end()
     })
-    response.statusCode = 302
-    response.setHeader('Location', '/')
-    return response.end()
   }
 
   response.setHeader('Content-Type','text/html')
