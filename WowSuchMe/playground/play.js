@@ -29,10 +29,14 @@ const server = http.createServer((request,response) => {
     return request.on('end', () => {
       const parsedBody = Buffer.concat(body).toString()
       const message = parsedBody.split('=')[1]
-      fs.writeFileSync('message.txt',message)
-      response.statusCode = 302
-      response.setHeader('Location', '/')
-      return response.end()
+      fs.writeFile('message.txt',message,(error) => {
+        if(!error){
+          console.log(`File saved : ${message}`)
+          response.statusCode = 302
+          response.setHeader('Location', '/')
+          return response.end()
+        }
+      })
     })
   }
 
