@@ -13,6 +13,6 @@ jsonwebtoken : Создает хеш веб-токены
 bcryptjs : Создает хеш с солью для хранения паролей
 compression : gzip-компрессор
 nodemon : авто-рестарт node
-pug : template engine
+pug : минималистичный template engine
 ejs : template engine
 express-handlebars : template engine с поддержкой express,в отличии от handlebars

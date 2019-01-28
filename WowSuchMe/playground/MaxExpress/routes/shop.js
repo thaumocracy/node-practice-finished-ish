@@ -12,7 +12,10 @@ router.get('/', (request, response, next) => {
   response.render('shop', {
       prods: products,
       pageTitle: 'Shop',
-      path:'/'
+      path:'/',
+      hasProducts : true,
+      activeShop:true,
+      productCSS:true,
     });
 });
 
