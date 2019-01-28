@@ -1,28 +1,24 @@
-const http = require('http')
+const path = require('path');
 
-const path = require('path')
-const express = require('express')
-const bodyParser = require('body-parser')
+const express = require('express');
+const bodyParser = require('body-parser');
 
-const app = express()
+const app = express();
 
-app.set('view engine','pug')
-app.set('views','views')
+app.set('view engine', 'pug');
+app.set('views', 'views');
 
-app.use(bodyParser.urlencoded({extended:false}))
-app.use(express.static(path.join(__dirname,'public')))
+const adminData = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
-const adminData = require('./routes/admin')
-const shopRoutes = require('./routes/shop')
-const notFound = require('./routes/404')
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/admin', adminData.routes);
+app.use(shopRoutes);
 
+app.use((request, response, next) => {
+    response.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+});
 
-app.use('/admin',adminData.routes)
-app.use(shopRoutes)
-app.use(notFound)
-
-
-app.listen(3000,() => {
-    console.log(`Server started at port 3000`)
-})
+app.listen(3000);
