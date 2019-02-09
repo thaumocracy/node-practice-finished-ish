@@ -4,6 +4,7 @@
   "description": "Heroku version with start package",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "lodash": "^4.17.11"
   },
   "devDependencies": {},
