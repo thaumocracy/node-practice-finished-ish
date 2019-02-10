@@ -54,7 +54,7 @@ app.post('/signin',(request,response) => {
         (request.body.password === database.users[0].password)
     ){
         console.log(`Signin success`)
-        res.json(database.users[0])
+        response.json(database.users[0])
     } else {
         response.status(400).json(`Error loggin in`)
     }
