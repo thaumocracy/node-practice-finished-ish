@@ -2,8 +2,21 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt-nodejs')
 const cors = require('cors')
+const knex = require('knex')
 
 const app = express()
+
+
+const db = knex ({
+    client: 'pg',
+    connection: {
+      host : '127.0.0.1',
+      user : 'admin',
+      password : '1234',
+      database : 'smart-brain'
+    }
+  });
+
 
 app.use(bodyParser.json())
 app.use(cors())
@@ -62,18 +75,15 @@ app.post('/signin',(request,response) => {
 
 app.post('/register',(request,response) => {
     const { email , name , password} = request.body
-    bcrypt.hash(password, null, null, function(err, hash) {
-        console.log(hash)
-    });
-    database.users.push({
-            id:"125",
-            name:name,
-            email:email,
-            password:password,
-            entries:0,
-            joined: new Date()
+    db('users')
+    .returning('*')
+    .insert({
+        email:email,
+        name:name,
+        joined:new Date()
     })
-    response.json(database.users[database.users.length -1])
+    .then(user => response.json(user[0]))
+    .catch(error => response.status(400).json('Unable to register'))
 })
 
 app.put('/image',(request,response) => {
