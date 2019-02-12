@@ -4,6 +4,12 @@ const bcrypt = require('bcrypt-nodejs')
 const cors = require('cors')
 const knex = require('knex')
 
+
+const register = require('./controllers/register')
+const signin = require('./controllers/signin')
+const profile = require('./controllers/profile')
+const image = require('./controllers/image')
+
 const app = express()
 
 
@@ -27,80 +33,21 @@ app.get('/',(request,response) => {
 })
 
 app.get('/profile/:id',(request,response) => {
-    const {id } = request.params
-    db.select('*')
-    .from('users')
-    .where({id:id})
-    .then( user => {
-        if(user.length){
-            response.json(user[0])
-        } else {
-            response.status(400).send('User not found')
-        }
-    })
-    .catch(error => response.status(400).send('Not found'))
+    profile.handleProfileGet(request,response,db)
 })
 
 app.post('/signin',(request,response) => {
-    db.select('email','hash').from('login')
-    .where('email','=',request.body.email)
-    .then(data => {
-        const isValid = bcrypt.compareSync(request.body.password,data[0].hash)
-        if(isValid){
-            return db.select('*')
-            .from('users')
-            .where('email','=',request.body.email)
-            .then(user => {
-                console.log(user)
-                response.json(user[0])
-            })
-            .catch(error => response.status(400).json('Unable to get user'))
-        } else {
-            response.statur(400).send('Som Teng Wong')
-        }
-
-    }).catch(error => response.status(400).send('Som Teng Wong'))
+    signin.handleSignin(request,response,db,bcrypt)
 })
 
-app.post('/register',(request,response) => {
-    const { email , name , password} = request.body
-    const hash = bcrypt.hashSync(password)
-        db.transaction(trx => {
-            trx.insert({
-                hash:hash,
-                email:email
-            })
-            .into('login')
-            .returning('email')
-            .then(loginEmail => {
-                return trx('users')
-                .returning('*')
-                .insert({
-                    email:loginEmail[0],
-                    name:name,
-                    joined:new Date()
-                })
-                .then(user => response.json(user[0]))
-            })
-            .then(trx.commit)
-            .catch(trx.rollback)
-        })
-        .catch(error => response.status(400).json('Unable to register'))
-})
+app.post('/register', (request,response) => register.handleRegister(request,response , db , bcrypt))
 
+app.post('/imageurl',(request,response) => {
+    image.handleApiCall(request,response)
+})
 app.put('/image',(request,response) => {
-    const {id } = request.body
-    db('users').where('id','=',id)
-    .increment('entries',1)
-    .returning('entries')
-    .then(entries => response.json(entries[0]))
-    .catch(error => response.status(400).send('So Tung Wong'))
+    image.handleImage(request,response,db)
 })
-
-
-
-
-
 
 app.listen(3000,() => {
     console.log(`Server listening on port 3000`)
