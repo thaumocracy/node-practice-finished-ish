@@ -18,3 +18,5 @@ ejs : template engine
 express-handlebars : template engine с поддержкой express,в отличии от handlebars
 Knex : node-пакет для подключения SQL баз данных
 pg : аддон PostgreSQL для Knex
+Method-override : добавление методов PUT и DELETE в html-формы
+passport : auth  
